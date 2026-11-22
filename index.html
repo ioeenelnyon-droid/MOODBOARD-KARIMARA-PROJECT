@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moodboard Brand & Visual: Karimunjawa & Karimara</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans & Fredoka untuk sentuhan tropis modern -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        coral: '#FF6347',      /* Warna 1: Coral Sunset */
+                        sand: '#F7D794',       /* Warna 2: Warm Sand */
+                        aqua: '#00CEC9',       /* Warna 3: Tropical Aqua */
+                        teal: '#008B94',       /* Warna 4: Lagoon Teal */
+                        deepsea: '#044E6B',    /* Warna 5: Deep Ocean */
+                        palm: '#5D9C31',       /* Aksen pendukung dari desain 1 */
+                    },
+                    fontFamily: {
+                        display: ['Fredoka', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Animations & Glassmorphism */
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #044E6B;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .font-display {
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        /* Latar Belakang Laut Bergerak (GIF-like Animated Ocean Background) */
+        .ocean-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            background: linear-gradient(180deg, #008B94 0%, #044E6B 45%, #022C3D 100%);
+            overflow: hidden;
+        }
+
+        /* GIF Laut Realistis Overlay dengan Blend Mode agar menyatu sempurna dengan palet */
+        .ocean-gif-layer {
+            position: fixed;
+            top: -5%;
+            left: -5%;
+            width: 110vw;
+            height: 110vh;
+            z-index: -1;
+            object-fit: cover;
+            opacity: 0.45;
+            mix-blend-mode: soft-light;
+            animation: oceanSwell 14s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        @keyframes oceanSwell {
+            0% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.04) translate(-1.5%, -1%); }
+            100% { transform: scale(1.02) translate(1.5%, 1%); }
+        }
+
+        /* Animasi Caustics / Pantulan Cahaya Bawah Laut */
+        .water-caustics {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            z-index: -1;
+            background-image: 
+                radial-gradient(circle at 30% 40%, rgba(0, 206, 201, 0.22) 0%, transparent 45%),
+                radial-gradient(circle at 70% 60%, rgba(247, 215, 148, 0.14) 0%, transparent 40%),
+                radial-gradient(circle at 50% 20%, rgba(255, 99, 71, 0.12) 0%, transparent 35%);
+            animation: driftWater 18s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        @keyframes driftWater {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            50% { transform: translate(-3%, 2%) rotate(3deg) scale(1.05); }
+            100% { transform: translate(2%, -3%) rotate(-2deg) scale(1); }
+        }
+
+        /* Animasi Gelombang SVG di Bagian Bawah Layar */
+        .waves-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 18vh;
+            min-height: 100px;
+            max-height: 180px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .parallax > use {
+            animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
+        }
+        .parallax > use:nth-child(1) { animation-delay: -2s; animation-duration: 7s; }
+        .parallax > use:nth-child(2) { animation-delay: -3s; animation-duration: 10s; }
+        .parallax > use:nth-child(3) { animation-delay: -4s; animation-duration: 13s; }
+        .parallax > use:nth-child(4) { animation-delay: -5s; animation-duration: 20s; }
+
+        @keyframes move-forever {
+            0% { transform: translate3d(-90px,0,0); }
+            100% { transform: translate3d(85px,0,0); }
+        }
+
+        /* Floating Animation untuk Kartu Moodboard */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .mood-card {
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            background: rgba(255, 255, 255, 0.11);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .mood-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(255, 255, 255, 0.18);
+            border-color: #F7D794;
+            box-shadow: 0 20px 40px -15px rgba(0, 206, 201, 0.35), 0 0 20px rgba(247, 215, 148, 0.2);
+        }
+
+        /* Animasi Modal Pop-up */
+        .modal-backdrop {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .modal-backdrop.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-content {
+            transform: scale(0.9) translateY(20px);
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .modal-backdrop.active .modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #044E6B; }
+        ::-webkit-scrollbar-thumb { background: #00CEC9; border-radius: 99px; }
+        ::-webkit-scrollbar-thumb:hover { background: #FF6347; }
+    </style>
+</head>
+<body class="text-white min-h-screen relative selection:bg-coral selection:text-white">
+
+    <!-- 1. LAYER WALLPAPER LAUT ANIMASI / GIF -->
+    <div class="ocean-bg"></div>
+    <!-- Wallpaper Ombak Laut (Pastikan file laut.gif atau unduhan (36).jpg ada di folder yang sama di GitHub) -->
+    <img id="oceanGifBg"
+         src="./laut.gif" 
+         alt="Wallpaper Pemandangan Ombak Lautan" 
+         class="ocean-gif-layer"
+         onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src='./unduhan (36).jpg';}else{this.src='https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=1600&q=80';}">
+    <div class="water-caustics"></div>
+    <canvas id="bubbleCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+    <!-- Gelombang SVG Halus di Bagian Bawah -->
+    <svg class="waves-container" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none">
+        <defs>
+            <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+            <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(0, 206, 201, 0.14)" />
+            <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(0, 139, 148, 0.2)" />
+            <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(4, 78, 107, 0.35)" />
+            <use xlink:href="#gentle-wave" x="48" y="7" fill="rgba(2, 44, 61, 0.55)" />
+        </g>
+    </svg>
+
+    <!-- Toast Notifikasi Salin Warna -->
+    <div id="toast" class="fixed top-5 right-5 z-50 transform translate-x-full opacity-0 transition-all duration-300 bg-deepsea/95 border border-aqua/50 text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-3 backdrop-blur-md">
+        <span id="toastColorDot" class="w-4 h-4 rounded-full border border-white"></span>
+        <span id="toastText" class="text-xs sm:text-sm font-medium">Warna disalin!</span>
+    </div>
+
+    <!-- Tombol Ganti Wallpaper Laut dari Perangkat di Pojok Kiri Bawah -->
+    <label title="Pilih file wallpaper laut/GIF dari perangkat"
+           class="fixed bottom-4 left-4 z-40 px-4 py-2 rounded-full bg-deepsea/85 hover:bg-teal text-white/90 text-xs font-medium border border-white/20 backdrop-blur-md shadow-lg flex items-center gap-2 transition-all cursor-pointer">
+        <i data-lucide="image" class="w-3.5 h-3.5 text-aqua"></i>
+        <span>Ganti Wallpaper Laut</span>
+        <input type="file" accept="image/*" class="hidden" onchange="replaceWallpaper(event)">
+    </label>
+
+    <!-- KONTEN UTAMA -->
+    <main class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 pb-24">
+        
+        <!-- HEADER UTAMA YANG RAPI & TERPUSAT -->
+        <header class="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-xs font-semibold tracking-wide text-sand mb-4">
+                <i data-lucide="compass" class="w-3.5 h-3.5 text-coral"></i>
+                <span>BRAND & VISUAL MOODBOARD</span>
+            </div>
+            <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-white drop-shadow-md">
+                Karimunjawa <span class="text-coral">&</span> <span class="text-aqua">Karimara</span>
+            </h1>
+            <p class="text-sm sm:text-base text-white/80 mt-3 leading-relaxed">
+                Eksplorasi harmoni visual antara ilustrasi tropis ramah keluarga dan identitas gelombang modern dalam satu kesatuan palet bahari. Klik kartu mana saja untuk melihat filosofi desainnya.
+            </p>
+        </header>
+
+        <!-- SECTION 1: UNIFIED COLOR PALETTE (5 WARNA UTAMA) -->
+        <section class="mb-10 sm:mb-12">
+            <div class="mood-card rounded-3xl p-6 sm:p-8">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                            <i data-lucide="palette" class="w-5 h-5 text-sand"></i>
+                            Unified Coastal Color Palette
+                        </h2>
+                        <p class="text-xs text-white/70 mt-0.5">Klik lingkaran warna untuk menyalin kode HEX</p>
+                    </div>
+                    <span class="text-[11px] font-mono px-3 py-1 rounded-full bg-white/10 text-aqua self-start sm:self-center">
+                        5 HARMONIZED TONES
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4">
+                    <!-- Warna 1: Coral Sunset -->
+                    <button onclick="copyColor('#FF6347', 'Coral Sunset')" class="group flex flex-col items-center p-4 rounded-2xl bg-white/5 hover:bg-white/15 border border-white/10 hover:border-coral transition-all duration-300 cursor-pointer">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full shadow-lg mb-3 transform group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300 border-4 border-white/25" style="background-color: #FF6347;"></div>
+                        <span class="font-display font-semibold text-base text-white">Coral Sunset</span>
+                        <span class="text-xs font-mono text-coral mt-0.5">#FF6347</span>
+                        <span class="text-[11px] text-white/65 mt-1 text-center">Energi, Terumbu Karang & Aksen Utama</span>
+                    </button>
+
+                    <!-- Warna 2: Warm Sand -->
+                    <button onclick="copyColor('#F7D794', 'Warm Sand')" class="group flex flex-col items-center p-4 rounded-2xl bg-white/5 hover:bg-white/15 border border-white/10 hover:border-sand transition-all duration-300 cursor-pointer">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full shadow-lg mb-3 transform group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-300 border-4 border-white/25" style="background-color: #F7D794;"></div>
+                        <span class="font-display font-semibold text-base text-white">Warm Sand</span>
+                        <span class="text-xs font-mono text-sand mt-0.5">#F7D794</span>
+                        <span class="text-[11px] text-white/65 mt-1 text-center">Pasir Putih, Ramah & Tipografi Utama</span>
+                    </button>
+
+                    <!-- Warna 3: Tropical Aqua -->
+                    <button onclick="copyColor('#00CEC9', 'Tropical Aqua')" class="group flex flex-col items-center p-4 rounded-2xl bg-white/5 hover:bg-white/15 border border-white/10 hover:border-aqua transition-all duration-300 cursor-pointer">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full shadow-lg mb-3 transform group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300 border-4 border-white/25" style="background-color: #00CEC9;"></div>
+                        <span class="font-display font-semibold text-base text-white">Tropical Aqua</span>
+                        <span class="text-xs font-mono text-aqua mt-0.5">#00CEC9</span>
+                        <span class="text-[11px] text-white/65 mt-1 text-center">Kesegaran Air Dangkal & Keceriaan</span>
+                    </button>
+
+                    <!-- Warna 4: Lagoon Teal -->
+                    <button onclick="copyColor('#008B94', 'Lagoon Teal')" class="group flex flex-col items-center p-4 rounded-2xl bg-white/5 hover:bg-white/15 border border-white/10 hover:border-teal transition-all duration-300 cursor-pointer">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full shadow-lg mb-3 transform group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-300 border-4 border-white/25" style="background-color: #008B94;"></div>
+                        <span class="font-display font-semibold text-base text-white">Lagoon Teal</span>
+                        <span class="text-xs font-mono text-aqua mt-0.5">#008B94</span>
+                        <span class="text-[11px] text-white/65 mt-1 text-center">Garis Ombak Dinamis & Keseimbangan</span>
+                    </button>
+
+                    <!-- Warna 5: Deep Ocean -->
+                    <button onclick="copyColor('#044E6B', 'Deep Ocean')" class="col-span-2 sm:col-span-1 group flex flex-col items-center p-4 rounded-2xl bg-white/5 hover:bg-white/15 border border-white/10 hover:border-aqua transition-all duration-300 cursor-pointer">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full shadow-lg mb-3 transform group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300 border-4 border-white/25" style="background-color: #044E6B;"></div>
+                        <span class="font-display font-semibold text-base text-white">Deep Ocean</span>
+                        <span class="text-xs font-mono text-sand mt-0.5">#044E6B</span>
+                        <span class="text-[11px] text-white/65 mt-1 text-center">Kedalaman Laut, Kontras & Kepercayaan</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FILTER KATEGORI MOODBOARD -->
+        <div class="flex flex-wrap items-center justify-center gap-2.5 mb-8">
+            <button onclick="filterMoodboard('all')" class="filter-btn active px-5 py-2.5 rounded-full text-sm font-semibold bg-coral text-white shadow-lg transition-all cursor-pointer">
+                Semua Elemen (8)
+            </button>
+            <button onclick="filterMoodboard('artwork')" class="filter-btn px-5 py-2.5 rounded-full text-sm font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all cursor-pointer">
+                🎨 Desain Utama
+            </button>
+            <button onclick="filterMoodboard('nature')" class="filter-btn px-5 py-2.5 rounded-full text-sm font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all cursor-pointer">
+                🐢 Alam & Fauna
+            </button>
+            <button onclick="filterMoodboard('vibe')" class="filter-btn px-5 py-2.5 rounded-full text-sm font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all cursor-pointer">
+                🌊 Tekstur & Suasana
+            </button>
+        </div>
+
+        <!-- SECTION 2: RAPI & SIMETRIS BENTO MOODBOARD GRID -->
+        <section id="moodboardGrid" class="grid grid-cols-1 md:grid-cols-12 gap-6">
+            
+            <!-- BARIS 1: DUA DESAIN UTAMA SEJAJAR & SIMETRIS (6 + 6 KOLOM) -->
+            <!-- CARD 1: DESAIN 1 - KARIMUNJAWA TURTLE & PALM -->
+            <article data-category="artwork" onclick="openModal('karimunjawa')" 
+                     class="mood-card md:col-span-6 min-h-[450px] rounded-3xl overflow-hidden relative group cursor-pointer flex flex-col justify-between p-6 bg-[#F6F6F6] text-deepsea">
+                <div class="flex items-center justify-between z-10">
+                    <span class="px-3.5 py-1 rounded-full text-xs font-bold bg-sand text-deepsea shadow-sm flex items-center gap-1.5">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-coral"></i> Desain Referensi #01
+                    </span>
+                    <div class="flex items-center gap-2">
+                        <label onclick="event.stopPropagation()" title="Ganti file gambar asli dari perangkat" class="w-9 h-9 rounded-full bg-deepsea/10 hover:bg-teal hover:text-white flex items-center justify-center transition-colors cursor-pointer">
+                            <i data-lucide="image-plus" class="w-4 h-4"></i>
+                            <input type="file" accept="image/*" class="hidden" onchange="replaceArtwork(event, 'imgKarimunjawa', 'karimunjawa')">
+                        </label>
+                        <span class="w-9 h-9 rounded-full bg-deepsea/10 group-hover:bg-coral group-hover:text-white flex items-center justify-center transition-colors">
+                            <i data-lucide="expand" class="w-4 h-4"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="my-auto flex items-center justify-center py-4 transform group-hover:scale-105 transition-transform duration-500 overflow-hidden rounded-2xl">
+                    <!-- Gambar Asli Desain #01 (Simpan file dengan nama karimunjawa.jpeg di repo GitHub) -->
+                    <img id="imgKarimunjawa" 
+                         src="./karimunjawa.jpeg" 
+                         alt="Desain Karimunjawa Penyu & Kelapa"
+                         class="w-full max-h-[260px] object-contain mx-auto"
+                         onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src='./WhatsApp Image 2026-11-21 at 21.09.48_4.jpeg';}">
+                </div>
+
+                <div class="z-10 bg-deepsea/95 text-white p-4 rounded-2xl backdrop-blur-md">
+                    <h3 class="font-bold text-lg text-sand">Ilustrasi Karakter "Karimunjawa"</h3>
+                    <p class="text-xs text-white/80 line-clamp-2 mt-1">Perpaduan maskot penyu hijau, pohon kelapa, dan tipografi bertumpuk ceria yang merepresentasikan keramahan wisata keluarga.</p>
+                </div>
+            </article>
+
+            <!-- CARD 2: DESAIN 2 - KARIMARA WAVE LOGO -->
+            <article data-category="artwork" onclick="openModal('karimara')" 
+                     class="mood-card md:col-span-6 min-h-[450px] rounded-3xl overflow-hidden relative group cursor-pointer flex flex-col justify-between p-6 bg-white text-deepsea">
+                <div class="flex items-center justify-between z-10">
+                    <span class="px-3.5 py-1 rounded-full text-xs font-bold bg-aqua/20 text-deepsea shadow-sm flex items-center gap-1.5">
+                        <i data-lucide="waves" class="w-3.5 h-3.5 text-teal"></i> Desain Referensi #02
+                    </span>
+                    <div class="flex items-center gap-2">
+                        <label onclick="event.stopPropagation()" title="Ganti file gambar asli dari perangkat" class="w-9 h-9 rounded-full bg-deepsea/10 hover:bg-teal hover:text-white flex items-center justify-center transition-colors cursor-pointer">
+                            <i data-lucide="image-plus" class="w-4 h-4"></i>
+                            <input type="file" accept="image/*" class="hidden" onchange="replaceArtwork(event, 'imgKarimara', 'karimara')">
+                        </label>
+                        <span class="w-9 h-9 rounded-full bg-deepsea/10 group-hover:bg-coral group-hover:text-white flex items-center justify-center transition-colors">
+                            <i data-lucide="expand" class="w-4 h-4"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="my-auto flex items-center justify-center py-4 transform group-hover:scale-105 transition-transform duration-500 overflow-hidden rounded-2xl">
+                    <!-- Gambar Asli Desain #02 (Simpan file dengan nama karimara.jpeg di repo GitHub) -->
+                    <img id="imgKarimara" 
+                         src="./karimara.jpeg" 
+                         alt="Desain Logotype KARIMARA"
+                         class="w-full max-h-[260px] object-contain mx-auto"
+                         onerror="if(!this.dataset.tried){this.dataset.tried='1';this.src='./WhatsApp Image 2026-11-21 at 21.47.54_4.jpeg';}">
+                </div>
+
+                <div class="z-10 bg-deepsea/95 text-white p-4 rounded-2xl backdrop-blur-md">
+                    <h3 class="font-bold text-lg text-aqua">Logotype Dinamis "KARIMARA"</h3>
+                    <p class="text-xs text-white/80 line-clamp-2 mt-1">Garis ombak mengalir (fluid line-art) yang memeluk tipografi multi-warna, mengikat seluruh palet dari Deep Ocean hingga Coral.</p>
+                </div>
+            </article>
+
+            <!-- BARIS 2: TIGA KARTU FOTOGRAFI SEIMBANG (4 + 4 + 4 KOLOM) -->
+            <!-- CARD 3: FOTO PANTAI PASIR PUTIH & AIR TOSKA -->
+            <article data-category="vibe" onclick="openModal('lagoon')" 
+                     class="mood-card md:col-span-4 h-[270px] rounded-3xl overflow-hidden relative group cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" 
+                     alt="Pantai Pasir Putih & Air Toska"
+                     onerror="this.src='https://placehold.co/800x500/00CEC9/044E6B?text=Lagoon+Shore'"
+                     class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-deepsea/90 via-deepsea/20 to-transparent"></div>
+                <div class="absolute top-4 left-4 flex gap-1.5">
+                    <span class="w-3.5 h-3.5 rounded-full bg-aqua border border-white shadow"></span>
+                    <span class="w-3.5 h-3.5 rounded-full bg-sand border border-white shadow"></span>
+                </div>
+                <div class="absolute bottom-5 left-5 right-5">
+                    <span class="text-[11px] uppercase tracking-wider text-sand font-semibold">Atmosfer & Gradasi</span>
+                    <h3 class="font-bold text-lg text-white leading-tight mt-0.5">Pertemuan Pasir & Laguna</h3>
+                </div>
+            </article>
+
+            <!-- CARD 4: FOTO PENYU LAUT DI HABITAT ASLI -->
+            <article data-category="nature" onclick="openModal('turtle')" 
+                     class="mood-card md:col-span-4 h-[270px] rounded-3xl overflow-hidden relative group cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1518467166778-b88f373ffec7?auto=format&fit=crop&w=800&q=80" 
+                     alt="Penyu Hijau Karimunjawa"
+                     onerror="this.src='https://placehold.co/800x900/008B94/FFFFFF?text=Green+Sea+Turtle'"
+                     class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-deepsea/95 via-deepsea/25 to-transparent"></div>
+                <div class="absolute top-4 left-4 flex gap-1.5">
+                    <span class="w-3.5 h-3.5 rounded-full bg-teal border border-white shadow"></span>
+                    <span class="w-3.5 h-3.5 rounded-full bg-deepsea border border-white shadow"></span>
+                    <span class="w-3.5 h-3.5 rounded-full bg-palm border border-white shadow"></span>
+                </div>
+                <div class="absolute bottom-5 left-5 right-5">
+                    <span class="px-2.5 py-0.5 rounded-md bg-teal/90 text-[10px] uppercase tracking-wider text-white font-semibold">Ikon Fauna Lokal</span>
+                    <h3 class="font-bold text-lg text-white leading-tight mt-1">Penyu Hijau Karimunjawa</h3>
+                </div>
+            </article>
+
+            <!-- CARD 5: TERUMBU KARANG CORAL -->
+            <article data-category="nature" onclick="openModal('coral')" 
+                     class="mood-card md:col-span-4 h-[270px] rounded-3xl overflow-hidden relative group cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1546026423-cc4642628d2b?auto=format&fit=crop&w=800&q=80" 
+                     alt="Terumbu Karang Coral"
+                     onerror="this.src='https://placehold.co/800x500/FF6347/FFFFFF?text=Coral+Reef'"
+                     class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-deepsea/90 via-deepsea/20 to-transparent"></div>
+                <div class="absolute top-4 left-4 flex gap-1.5">
+                    <span class="w-3.5 h-3.5 rounded-full bg-coral border border-white shadow"></span>
+                    <span class="w-3.5 h-3.5 rounded-full bg-aqua border border-white shadow"></span>
+                </div>
+                <div class="absolute bottom-5 left-5 right-5">
+                    <span class="text-[10px] uppercase tracking-wider text-coral font-bold bg-white/95 px-2 py-0.5 rounded">Aksen Kontras</span>
+                    <h3 class="font-bold text-lg text-white leading-tight mt-1">Vitalitas Terumbu Karang</h3>
+                </div>
+            </article>
+
+            <!-- BARIS 3: DUA KARTU LANDSCAPE SEIMBANG (6 + 6 KOLOM) -->
+            <!-- CARD 6: OMBAK BIRU DARI UDARA / AERIAL WAVE -->
+            <article data-category="vibe" onclick="openModal('waves')" 
+                     class="mood-card md:col-span-6 h-[250px] rounded-3xl overflow-hidden relative group cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=900&q=80" 
+                     alt="Tekstur Ombak Laut"
+                     onerror="this.src='https://placehold.co/800x500/044E6B/00CEC9?text=Ocean+Waves'"
+                     class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-deepsea/90 via-deepsea/25 to-transparent"></div>
+                <div class="absolute top-4 left-4 flex gap-1.5">
+                    <span class="w-3.5 h-3.5 rounded-full bg-deepsea border border-white shadow"></span>
+                    <span class="w-3.5 h-3.5 rounded-full bg-teal border border-white shadow"></span>
+                </div>
+                <div class="absolute bottom-5 left-5 right-5">
+                    <span class="text-[11px] uppercase tracking-wider text-aqua font-semibold">Pola & Ritme</span>
+                    <h3 class="font-bold text-xl text-white leading-tight mt-0.5">Ritme Gelombang Samudra</h3>
+                    <p class="text-xs text-white/75 mt-1">Inspirasi garis aliran dinamis pada tipografi KARIMARA.</p>
+                </div>
+            </article>
+
+            <!-- CARD 7: SILUET POHON KELAPA & SENJA TROPIS -->
+            <article data-category="nature" onclick="openModal('palms')" 
+                     class="mood-card md:col-span-6 h-[250px] rounded-3xl overflow-hidden relative group cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=900&q=80" 
+                     alt="Pohon Kelapa & Sunset"
+                     onerror="this.src='https://placehold.co/800x500/F7D794/044E6B?text=Tropical+Palms'"
+                     class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-deepsea/90 via-deepsea/25 to-transparent"></div>
+                <div class="absolute top-4 left-4 flex gap-1.5">
+                    <span class="w-3.5 h-3.5 rounded-full bg-sand border border-white shadow"></span>
+                    <span class="w-3.5 h-3.5 rounded-full bg-coral border border-white shadow"></span>
+                </div>
+                <div class="absolute bottom-5 left-5 right-5">
+                    <span class="text-[11px] uppercase tracking-wider text-sand font-semibold">Kehangatan Tropis</span>
+                    <h3 class="font-bold text-xl text-white leading-tight mt-0.5">Nyiur Melambai & Senja</h3>
+                    <p class="text-xs text-white/75 mt-1">Menghubungkan elemen pulau kelapa dengan nuansa hangat senja.</p>
+                </div>
+            </article>
+
+            <!-- BARIS 4: BANNER KESIMPULAN VISUAL (12 KOLOM PENUH) -->
+            <!-- CARD 8: BRAND SYNTHESIS / PERPADUAN KONSEP -->
+            <article data-category="vibe" onclick="openModal('synthesis')" 
+                     class="mood-card md:col-span-12 rounded-3xl p-6 sm:p-8 relative group cursor-pointer flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 bg-gradient-to-r from-deepsea/85 via-teal/75 to-deepsea/85">
+                <div class="flex items-start sm:items-center gap-5">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-coral text-white flex items-center justify-center shrink-0 shadow-lg group-hover:rotate-12 transition-transform">
+                        <i data-lucide="layers" class="w-8 h-8"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-sand text-deepsea">KESIMPULAN ARAH VISUAL</span>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-bold text-white">Sinergi "Playful Heritage" & "Modern Coastal"</h3>
+                        <p class="text-sm text-white/85 mt-1 max-w-3xl">
+                            Bagaimana dua gaya desain berbeda menyatu lewat satu palet warna: Karakter ramah untuk merchandise/pariwisata & logotype gelombang untuk identitas brand modern.
+                        </p>
+                    </div>
+                </div>
+                <div class="self-end sm:self-center shrink-0 flex items-center gap-2 text-sand font-semibold text-sm group-hover:translate-x-1 transition-transform">
+                    <span>Baca Analisis Lengkap</span>
+                    <i data-lucide="arrow-right-circle" class="w-5 h-5 text-coral"></i>
+                </div>
+            </article>
+
+        </section>
+    </main>
+
+    <!-- MODAL PENJELASAN DETAIL SAAT KARTU DIKLIK -->
+    <div id="detailModal" onclick="closeModalOnBackdrop(event)" class="modal-backdrop fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-4 sm:p-6">
+        <div class="modal-content bg-deepsea border-2 border-aqua/50 rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl text-white relative">
+            
+            <!-- Tombol Tutup -->
+            <button onclick="closeModal()" class="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/50 hover:bg-coral text-white flex items-center justify-center transition-colors cursor-pointer backdrop-blur-sm">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <!-- Header Visual Modal -->
+            <div id="modalVisualContainer" class="w-full h-56 sm:h-64 bg-white/10 relative overflow-hidden flex items-center justify-center">
+                <!-- Diisi dinamis lewat JS -->
+            </div>
+
+            <!-- Konten Penjelasan Modal -->
+            <div class="p-6 sm:p-8">
+                <div class="flex flex-wrap items-center gap-2 mb-3" id="modalTags">
+                    <!-- Tags & Color Swatches -->
+                </div>
+                <h3 id="modalTitle" class="text-2xl sm:text-3xl font-bold text-sand mb-3">Judul Item</h3>
+                <p id="modalDesc" class="text-white/90 text-sm sm:text-base leading-relaxed mb-5">
+                    Deskripsi lengkap akan muncul di sini.
+                </p>
+
+                <!-- Kotak Peran dalam Moodboard -->
+                <div class="bg-white/10 border border-white/15 rounded-2xl p-4">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-aqua mb-1.5 flex items-center gap-1.5">
+                        <i data-lucide="lightbulb" class="w-4 h-4 text-coral"></i>
+                        Peran & Aplikasi Desain
+                    </h4>
+                    <p id="modalRole" class="text-xs sm:text-sm text-white/85 leading-relaxed"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT INTERAKTIVITAS & ANIMASI -->
+    <script>
+        // Inisialisasi ikon Lucide
+        lucide.createIcons();
+
+        // Fungsi Ganti Wallpaper dari File Lokal Perangkat
+        function replaceWallpaper(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const bgEl = document.getElementById('oceanGifBg');
+                bgEl.style.display = 'block';
+                bgEl.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Data Penjelasan Lengkap untuk Setiap Item Moodboard
+        const moodboardData = {
+            karimunjawa: {
+                title: 'Desain #01: Karakter Tropis "Karimunjawa"',
+                category: 'Ilustrasi Maskot & Tipografi Bertumpuk',
+                colors: ['#F7D794', '#00CEC9', '#008B94', '#5D9C31'],
+                visualType: 'artwork',
+                imageUrl: './karimunjawa.jpeg',
+                fallbackUrl: './WhatsApp Image 2026-11-21 at 21.09.48_4.jpeg',
+                badgeText: 'Ilustrasi Karakter, Penyu & Pulau Kelapa',
+                desc: 'Desain pertama mengusung pendekatan ilustrasi yang hangat, ramah, dan kaya cerita (storytelling). Tipografi bertumpuk vertikal dengan tekstur pasir dan percikan air dipadukan dengan maskot penyu hijau serta pohon kelapa di pulau kecil.',
+                role: 'Sangat ideal digunakan sebagai ilustrasi utama pada merchandise (kaos, totebag, stiker), papan selamat datang wisata, atau kampanye ramah keluarga yang menonjolkan keunikan flora-fauna Karimunjawa.'
+            },
+            karimara: {
+                title: 'Desain #02: Logotype Gelombang "KARIMARA"',
+                category: 'Identitas Brand Modern & Line-Art Ombak',
+                colors: ['#044E6B', '#008B94', '#00CEC9', '#F7D794', '#FF6347'],
+                visualType: 'artwork',
+                imageUrl: './karimara.jpeg',
+                fallbackUrl: './WhatsApp Image 2026-11-21 at 21.47.54_4.jpeg',
+                badgeText: 'Tipografi Multi-Warna & Aliran Ombak',
+                desc: 'Desain kedua menerjemahkan kelima lingkaran palet warna secara langsung ke dalam setiap huruf "KARIMARA". Garis-garis ombak monoline yang menggulung di belakang teks menciptakan kesan dinamis, mengalir, dan modern.',
+                role: 'Berfungsi sebagai logo utama (primary wordmark), header website, kemasan produk premium, atau branding resor/kafe tepi pantai yang ingin tampil kontemporer namun tetap berjiwa bahari.'
+            },
+            lagoon: {
+                title: 'Pertemuan Pasir Putih & Laguna Toska',
+                category: 'Referensi Atmosfer & Gradasi Warna',
+                colors: ['#F7D794', '#00CEC9', '#008B94'],
+                visualType: 'image',
+                imageUrl: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80',
+                badgeText: 'Transisi Warm Sand ke Tropical Aqua',
+                desc: 'Foto bibir pantai ini menjadi jembatan alami antara warna Warm Sand (#F7D794) dan Tropical Aqua (#00CEC9). Garis buih ombak tipis memberikan inspirasi tekstur organik pada latar belakang maupun pembatas bagian (section divider).',
+                role: 'Menjadi acuan pencahayaan dan mood fotografi: cerah, bersih, mengundang ketenangan, serta menjaga keseimbangan antara elemen hangat (pasir) dan sejuk (air laut).'
+            },
+            turtle: {
+                title: 'Penyu Hijau Karimunjawa (Chelonia mydas)',
+                category: 'Ikon Fauna & Konservasi Bahari',
+                colors: ['#008B94', '#044E6B', '#5D9C31'],
+                visualType: 'image',
+                imageUrl: 'https://images.unsplash.com/photo-1518467166778-b88f373ffec7?auto=format&fit=crop&w=900&q=80',
+                badgeText: 'Inspirasi Maskot Desain #01',
+                desc: 'Karimunjawa dikenal sebagai salah satu habitat penting penyu hijau dan penyu sisik di Laut Jawa. Kehadiran foto penyu di bawah air memperkaya konteks visual dari ilustrasi penyu pada Desain #01.',
+                role: 'Memberikan kedalaman makna pada brand: bukan sekadar estetika liburan, tetapi juga membawa pesan ekowisata dan kecintaan terhadap kehidupan bawah laut.'
+            },
+            coral: {
+                title: 'Vitalitas Terumbu Karang (Coral Accent)',
+                category: 'Sumber Aksen Warna #FF6347',
+                colors: ['#FF6347', '#00CEC9', '#044E6B'],
+                visualType: 'image',
+                imageUrl: 'https://images.unsplash.com/photo-1546026423-cc4642628d2b?auto=format&fit=crop&w=900&q=80',
+                badgeText: 'Titik Fokus & Energi Visual',
+                desc: 'Tanpa warna Coral (#FF6347), palet laut akan didominasi nuansa dingin (biru dan hijau). Foto terumbu karang menunjukkan bagaimana warna koral kemerahan menjadi titik fokus yang hidup di tengah birunya samudra.',
+                role: 'Digunakan secara strategis untuk tombol Call-to-Action (CTA), huruf akhir "RA" pada logo Karimara, serta elemen sorotan agar komposisi visual tidak terasa monoton.'
+            },
+            waves: {
+                title: 'Ritme & Garis Gelombang Samudra',
+                category: 'Referensi Pola & Gerakan',
+                colors: ['#044E6B', '#008B94', '#00CEC9'],
+                visualType: 'image',
+                imageUrl: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=900&q=80',
+                badgeText: 'Inspirasi Line-Art Desain #02',
+                desc: 'Pola gulungan ombak dari sudut pandang udara memperlihatkan garis-garis paralel yang ritmis. Inilah yang diterjemahkan menjadi ilustrasi garis ombak pada Desain #02 (Karimara) serta animasi gelombang di halaman ini.',
+                role: 'Menciptakan kesinambungan gerak (motion language) di seluruh media digital maupun cetak sehingga brand terasa hidup seperti air yang terus mengalir.'
+            },
+            palms: {
+                title: 'Nyiur Melambai & Kehangatan Senja',
+                category: 'Elemen Tropis & Pencahayaan',
+                colors: ['#F7D794', '#FF6347', '#044E6B'],
+                visualType: 'image',
+                imageUrl: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=900&q=80',
+                badgeText: 'Transisi Siang ke Senja Kepulauan',
+                desc: 'Siluet pohon kelapa yang berpadu dengan cahaya keemasan senja menghubungkan elemen pohon kelapa pada Desain #01 dengan gradasi hangat pasir (#F7D794) dan koral (#FF6347).',
+                role: 'Menambah dimensi emosional dan nostalgia liburan pulau tropis, cocok untuk latar belakang konten media sosial maupun editorial.'
+            },
+            synthesis: {
+                title: 'Sintesis Konsep: "Playful Heritage meets Modern Coastal"',
+                category: 'Panduan Penyatuan Dua Gaya Desain',
+                colors: ['#FF6347', '#F7D794', '#00CEC9', '#008B94', '#044E6B'],
+                visualType: 'image',
+                imageUrl: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=900&q=80',
+                badgeText: 'Ekosistem Visual Terpadu',
+                desc: 'Meskipun Desain #01 (ilustrasi penyu) dan Desain #02 (logotype ombak) memiliki gaya gambar yang berbeda, keduanya berhasil disatukan oleh satu sistem warna 5-nada yang konsisten dan tipografi membulat yang ramah.',
+                role: 'Gunakan Deep Ocean (#044E6B) & Lagoon Teal (#008B94) sebagai kanvas utama, Tropical Aqua (#00CEC9) untuk kesegaran, Warm Sand (#F7D794) untuk keterbacaan teks, dan Coral (#FF6347) sebagai pemantik perhatian.'
+            }
+        };
+
+        // Fungsi Membuka Modal Penjelasan
+        function openModal(key) {
+            const data = moodboardData[key];
+            if (!data) return;
+
+            const modal = document.getElementById('detailModal');
+            const visualContainer = document.getElementById('modalVisualContainer');
+            const tagsContainer = document.getElementById('modalTags');
+            
+            // Set Visual Header Modal (Mendukung gambar desain langsung maupun foto)
+            const isArtwork = data.visualType === 'artwork';
+            const imgClass = isArtwork ? 'w-full h-full object-contain bg-white p-4' : 'w-full h-full object-cover';
+            const fallbackAttr = data.fallbackUrl ? `onerror="this.src='${data.fallbackUrl}';"` : '';
+
+            visualContainer.innerHTML = `
+                <img src="${data.imageUrl}" alt="${data.title}" class="${imgClass}" ${fallbackAttr}>
+                <div class="absolute inset-0 bg-gradient-to-t from-deepsea via-transparent to-transparent pointer-events-none"></div>
+                <span class="absolute bottom-3 left-6 px-3 py-1 rounded-full bg-deepsea/90 border border-white/20 text-xs font-medium text-sand backdrop-blur-md">
+                    ${data.badgeText}
+                </span>
+            `;
+
+            // Set Color Swatches & Category Tag
+            const colorDotsHtml = data.colors.map(hex => 
+                `<span title="${hex}" onclick="copyColor('${hex}', 'Warna Palet')" class="w-5 h-5 rounded-full border-2 border-white shadow-sm cursor-pointer hover:scale-125 transition-transform" style="background-color: ${hex}"></span>`
+            ).join('');
+
+            tagsContainer.innerHTML = `
+                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-coral/20 text-coral border border-coral/40">${data.category}</span>
+                <div class="flex items-center gap-1.5 ml-auto bg-white/10 px-3 py-1 rounded-full">
+                    <span class="text-[11px] text-white/70 mr-1">Palet Terkait:</span>
+                    ${colorDotsHtml}
+                </div>
+            `;
+
+            document.getElementById('modalTitle').textContent = data.title;
+            document.getElementById('modalDesc').textContent = data.desc;
+            document.getElementById('modalRole').textContent = data.role;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Fungsi Menutup Modal Penjelasan
+        function closeModal() {
+            const modal = document.getElementById('detailModal');
+            if (!modal) return;
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Fungsi Menutup Modal saat Klik di Luar Kotak Konten (Backdrop)
+        function closeModalOnBackdrop(event) {
+            if (event.target === event.currentTarget) {
+                closeModal();
+            }
+        }
+
+        // Tutup modal dengan tombol Escape
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Fungsi untuk memuat gambar langsung dari perangkat pengguna jika diinginkan & menyimpannya di localStorage
+        function replaceArtwork(event, imgId, dataKey) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imgEl = document.getElementById(imgId);
+                imgEl.src = e.target.result;
+                if (moodboardData[dataKey]) {
+                    moodboardData[dataKey].imageUrl = e.target.result;
+                }
+                try {
+                    localStorage.setItem('saved_' + imgId, e.target.result);
+                } catch (err) {}
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Muat gambar tersimpan jika ada
+        window.addEventListener('DOMContentLoaded', () => {
+            ['imgKarimunjawa', 'imgKarimara'].forEach((id, idx) => {
+                const saved = localStorage.getItem('saved_' + id);
+                if (saved) {
+                    const imgEl = document.getElementById(id);
+                    imgEl.src = saved;
+                    const key = idx === 0 ? 'karimunjawa' : 'karimara';
+                    if (moodboardData[key]) moodboardData[key].imageUrl = saved;
+                }
+            });
+        });
+
+        // Fungsi Salin Kode Warna (Kompatibel dengan iFrame)
+        function copyColor(hex, name) {
+            const tempInput = document.createElement('input');
+            tempInput.value = hex;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            const toast = document.getElementById('toast');
+            const toastDot = document.getElementById('toastColorDot');
+            const toastText = document.getElementById('toastText');
+
+            toastDot.style.backgroundColor = hex;
+            toastText.textContent = `${name} (${hex}) disalin ke clipboard!`;
+
+            toast.classList.remove('translate-x-full', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-x-full', 'opacity-0');
+            }, 2600);
+        }
+
+        // Fungsi Filter Kategori Moodboard
+        function filterMoodboard(category) {
+            const cards = document.querySelectorAll('#moodboardGrid article');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-coral', 'shadow-lg');
+                btn.classList.add('bg-white/10', 'border', 'border-white/20');
+            });
+            event.currentTarget.classList.remove('bg-white/10', 'border', 'border-white/20');
+            event.currentTarget.classList.add('bg-coral', 'shadow-lg');
+
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'flex';
+                    card.style.animation = 'fadeInScale 0.4s ease forwards';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Animasi Gelembung Bawah Laut Halus pada Canvas
+        window.onload = function() {
+            const canvas = document.getElementById('bubbleCanvas');
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let bubbles = [];
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            const paletteBubbles = [
+                'rgba(0, 206, 201, 0.25)',
+                'rgba(247, 215, 148, 0.2)',
+                'rgba(255, 255, 255, 0.18)',
+                'rgba(255, 99, 71, 0.15)'
+            ];
+
+            for (let i = 0; i < 32; i++) {
+                bubbles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    r: Math.random() * 6 + 2,
+                    speedY: Math.random() * 0.7 + 0.25,
+                    wobble: Math.random() * Math.PI * 2,
+                    color: paletteBubbles[Math.floor(Math.random() * paletteBubbles.length)]
+                });
+            }
+
+            function animateBubbles() {
+                ctx.clearRect(0, 0, width, height);
+                bubbles.forEach(b => {
+                    b.y -= b.speedY;
+                    b.wobble += 0.02;
+                    const offsetX = Math.sin(b.wobble) * 1.2;
+
+                    if (b.y < -20) {
+                        b.y = height + 20;
+                        b.x = Math.random() * width;
+                    }
+
+                    ctx.beginPath();
+                    ctx.arc(b.x + offsetX, b.y, b.r, 0, Math.PI * 2);
+                    ctx.fillStyle = b.color;
+                    ctx.fill();
+                });
+                requestAnimationFrame(animateBubbles);
+            }
+            animateBubbles();
+        };
+    </script>
+</body>
+</html>
